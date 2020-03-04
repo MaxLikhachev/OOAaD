@@ -8,6 +8,11 @@ public class IntelligentCannibal extends Cannibal {
         this.preys = preys;
     }
 
+    IntelligentCannibal(String name) {
+        this.name = name;
+        this.preys = new ArrayList<Human>();
+    }
+
     public void cook(Human human) {
         System.out.println("Fried human: " + human.toString());
     }

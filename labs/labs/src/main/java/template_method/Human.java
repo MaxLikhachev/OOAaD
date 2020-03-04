@@ -5,8 +5,8 @@ public class Human {
     String sex;
 
     public Human(String name, String sex) {
-        this.name=name;
-        this.sex=sex;
+        this.name = name;
+        this.sex = sex;
     }
     
 	public String toString(){
