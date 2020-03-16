@@ -1,33 +1,39 @@
 package command;
 
 public class Stereo {
-    private String location;
+    private String location, state;
     
     public Stereo(String location) {
         this.location = location;
     }
     
     public void on() {
-        System.out.println(location + " Stereo is on");
+        this.state = "on";   
     }
     
     public void off() {
-        System.out.println(location + " Stereo is off");
+        this.state = "off";   
     }
     
     public void setSD() {
-        System.out.println(location + " stereo is set for CD input");
+        this.state = "set for CD input";   
     }
 
     public void setDVD() {
-        System.out.println(location + " stereo is set for DVD input");
+        this.state = "set for DVD input";   
     }
     
     public void setRadio() {
-        System.out.println(location + " Radio is set");
+        this.state = "set";   
     }
     
     public void setVolume(int volume){
         System.out.println(location + " stereo volume set to " + volume);
+
+        this.state = "set to " + volume;   
+    }
+
+    public String toString() {
+        return this.location + "Radio is " + this.state;
     }
 }

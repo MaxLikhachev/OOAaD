@@ -1,10 +1,21 @@
 package command;
 
+	/*
+	TODO 
+    Классы для каждого обработчика событий
+    Состояния для каждого прибора
+	Механизм "возврат-отмена" - список состояний, подключенных к меню
+    */
+    
+
 public final class App {
     public static void main(String[] args) {
-        RemoteControl remoteControl = new RemoteControl();
-        CeilingFan ceilingFan = new CeilingFan("Living room");
-        CeilingFanHighCommand ceilingFanHigh = new CeilingFanHighCommand(ceilingFan);
+        RemoteControlGUI app = new RemoteControlGUI();
+		app.pack();
+		app.setVisible(true);
+        /*RemoteControl remoteControl = new RemoteControl();
+        //CeilingFan ceilingFan = new CeilingFan("Living room");
+        //CeilingFanHighCommand ceilingFanHigh = new CeilingFanHighCommand(ceilingFan);
         //CeilingFanLowCommand ceilingFanLow = new CeilingFanLowCommand(ceilingFan);
         //CeilingFanMediumCommand ceilingFanMedium = new CeilingFanMediumCommand(ceilingFan);
         //CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
@@ -18,5 +29,6 @@ public final class App {
         remoteControl.onButtonWasPushed(2);
         System.out.println(remoteControl);
         remoteControl.undoButtonWasPushed();
+        */
     }
 }
