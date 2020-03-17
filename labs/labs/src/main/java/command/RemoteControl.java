@@ -3,7 +3,9 @@ package command;
 import java.util.ArrayList;
 
 public class RemoteControl {
-    ArrayList<BufferedCommand> commands = new ArrayList<>();
+    ArrayList<Command> commands = new ArrayList<>();
+    ArrayList<Integer> prevIndexes = new ArrayList<>();
+
     int index = 0, prevIndex = 0;
     
     public void execute(Command command) {
@@ -27,7 +29,7 @@ public class RemoteControl {
     public void redo() {
         System.out.println("\nREDO");
 
-        this.goToPrevState();
+        this.goToNextState();
         this.getCurrentCommand().execute();
 
         this.showCurrentState();
@@ -36,7 +38,9 @@ public class RemoteControl {
     private void addCommand(Command command) {
         this.prevIndex = this.index;
         this.index = this.commands.size();
-        this.commands.add(new BufferedCommand(this.prevIndex, command));
+
+        this.commands.add(command);
+        this.prevIndexes.add(this.prevIndex);
     }
 
     private Command getCurrentCommand() {
@@ -45,13 +49,11 @@ public class RemoteControl {
 
     private void goToPrevState() {
         this.prevIndex = this.index;
-        this.index = this.commands.get(this.index).prevIndex;
+        this.index = this.prevIndexes.get(this.index);
     }
 
     private void goToNextState() {
-
-        //this.prevIndex = this.index;
-        //this.index = this.commands.get(this.prevIndex);
+        this.prevIndex = this.prevIndex ^ this.index ^ ( this.index = this.prevIndex );
     }
 /*
     private Command getPrevCommand() {
@@ -63,27 +65,6 @@ public class RemoteControl {
     }
 */
     private void showCurrentState() {
-        System.out.println(this.index + " -> " + this.prevIndex + " : " + this.getCurrentCommand().toString());
-    }
-    class BufferedCommand implements Command{
-        Command command;
-        int prevIndex;
-
-        public BufferedCommand(int prevIndex, Command command) {
-            this.command = command;
-            this.prevIndex = prevIndex;
-        }
-
-        public String toString() {
-            return this.prevIndex + " . " + this.command;
-        }
-
-        public void execute() {
-            this.command.execute();
-        }
-
-        public void undo() {
-            this.command.undo();
-        }
+        System.out.println(this.index + " <- " + this.prevIndex + " : " + this.commands.get(this.prevIndexes.get(this.index)));
     }
 }
