@@ -10,13 +10,15 @@ public class RemoteControlGUI extends JFrame {
 
 	private Light light = new Light("");
 	private Stereo stereo = new Stereo("");
+	private GarageDoor garageDoor = new GarageDoor();
+	private CeilingFan ceilingFan = new CeilingFan("");
 
 	private JLabel labelLight = new JLabel("Light");
 	private JRadioButton radioLightOn = new JRadioButton("On");
 	private JRadioButton radioLightOff = new JRadioButton("Off");
 
 	private JLabel labelStereo = new JLabel("Stereo");
-	private JRadioButton radioStereoOn = new JRadioButton("On");
+	private JRadioButton radioStereoOnWithCD = new JRadioButton("On with CD");
 	private JRadioButton radioStereoOff = new JRadioButton("Off");
 
 	private JLabel labelGarageDoor = new JLabel("Garage door");
@@ -28,21 +30,34 @@ public class RemoteControlGUI extends JFrame {
 	private JRadioButton radioCeilingFanMedium = new JRadioButton("Medium");
 	private JRadioButton radioCeilingFanLow = new JRadioButton("Low");
 	private JRadioButton radioCeilingFanOff = new JRadioButton("Off");
+
+	private JLabel statusTitle = new JLabel("Status: ");
+	private JLabel statusBar = new JLabel("");
 	
 	public RemoteControlGUI() {
 	    super("Remote control");
 	    this.setBounds(100,100,320,320);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	   	Container container = this.getContentPane();
-		container.setLayout(new GridLayout(0, 2, 5, 0) );
-		
+		container.setLayout(new GridLayout(0, 2, 5, 5) );
+
 		JPanel gridLight = new JPanel();
 		gridLight.setLayout(new BoxLayout(gridLight, BoxLayout.X_AXIS));
 
-		radioLightOn.addActionListener(new RadioButtonEventListener());
-		radioLightOff.addActionListener(new RadioButtonEventListener());
-;
+		radioLightOn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new LightOnCommand(light).execute();
+				statusBar.setText(light.toString());
+			}
+		});
+
+		radioLightOff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new LightOffCommand(light).execute();
+				statusBar.setText(light.toString());
+			}
+		});
 		
 		container.add(labelLight);
 	    ButtonGroup groupLight = new ButtonGroup();
@@ -54,24 +69,53 @@ public class RemoteControlGUI extends JFrame {
 
 		container.add(gridLight);
 
+
 		
 		JPanel gridStereo = new JPanel();
 		gridStereo.setLayout(new BoxLayout(gridStereo, BoxLayout.X_AXIS));
 
+		radioStereoOnWithCD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new StereoOnWithCDCommand(stereo).execute();
+				statusBar.setText(stereo.toString());
+			}
+		});
+		radioStereoOff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new StereoOffCommand(stereo).execute();
+				statusBar.setText(stereo.toString());
+			}
+		});
+
 		container.add(labelStereo);
 	    ButtonGroup groupStereo = new ButtonGroup();
-		groupStereo.add(radioStereoOn);
+		groupStereo.add(radioStereoOnWithCD);
 	
 	    groupStereo.add(radioStereoOff);
-	    gridStereo.add(radioStereoOn);
+	    gridStereo.add(radioStereoOnWithCD);
 	    radioStereoOff.setSelected(true);
 		gridStereo.add(radioStereoOff);
 
 		container.add(gridStereo);
 		
 
+
 		JPanel gridGarageDoor = new JPanel();
 		gridGarageDoor.setLayout(new BoxLayout(gridGarageDoor, BoxLayout.X_AXIS));
+
+		radioGarageDoorOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GarageDoorOpenCommand(garageDoor).execute();
+				statusBar.setText(garageDoor.toString());
+			}
+		});
+
+		radioGarageDoorClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GarageDoorCloseCommand(garageDoor).execute();
+				statusBar.setText(garageDoor.toString());
+			}
+		});
 
 		container.add(labelGarageDoor);
 	    ButtonGroup groupGarageDoor = new ButtonGroup();
@@ -84,8 +128,38 @@ public class RemoteControlGUI extends JFrame {
 		container.add(gridGarageDoor);
 
 
+
 		JPanel gridCeilingFan = new JPanel();
 		gridCeilingFan.setLayout(new BoxLayout(gridCeilingFan, BoxLayout.X_AXIS));
+
+
+		radioCeilingFanHigh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CeilingFanHighCommand(ceilingFan).execute();
+				statusBar.setText(ceilingFan.toString());
+			}
+		});
+
+		radioCeilingFanMedium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CeilingFanMediumCommand(ceilingFan).execute();
+				statusBar.setText(ceilingFan.toString());
+			}
+		});
+
+		radioCeilingFanLow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CeilingFanLowCommand(ceilingFan).execute();
+				statusBar.setText(ceilingFan.toString());
+			}
+		});
+
+		radioCeilingFanOff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CeilingFanOffCommand(ceilingFan).execute();
+				statusBar.setText(ceilingFan.toString());
+			}
+		});
 		
 		container.add(labelCeilingFan);
 	    ButtonGroup groupCeilingFan = new ButtonGroup();
@@ -100,29 +174,12 @@ public class RemoteControlGUI extends JFrame {
 		gridCeilingFan.add(radioCeilingFanOff);
 
 		container.add(gridCeilingFan);
-	}
 
-	class RadioButtonEventListener implements ActionListener {
-		private String message = "Unknown action";
-		public void actionPerformed(ActionEvent e) {
-			if (radioLightOff.isSelected()) {
-				new LightOffCommand(light).execute();
-				this.message = light.toString();
-			}
-			if (radioLightOn.isSelected()) {
-				new LightOnCommand(light).execute();
-				this.message = light.toString();
-			}
-			if (radioStereoOff.isSelected()) {
-				new StereoOffCommand(stereo).execute();
-				this.message = stereo.toString();
-			}
-			if (radioStereoOn.isSelected()) {
-				new StereoOnWithCDCommand(stereo).execute();
-				this.message = stereo.toString();
-			}
-			
-			JOptionPane.showMessageDialog(null, this.message, "Output", JOptionPane.PLAIN_MESSAGE);	
-		}
+		JPanel gridStatusBar = new JPanel();
+		gridStatusBar.setLayout(new BoxLayout(gridStatusBar, BoxLayout.X_AXIS));
+		gridStatusBar.add(statusTitle);
+		gridStatusBar.add(statusBar);
+
+		container.add(gridStatusBar);
 	}
 }

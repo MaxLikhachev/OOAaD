@@ -1,24 +1,29 @@
 package command;
 
 public class GarageDoor {
+    private String state;
 
     public void up() {
-        System.out.println("The door is up");
+        this.state = "The door is up";
     }
 
     public void down() {
-        System.out.println("The door is down");
+        this.state = "The door is down";
     }
 
     public void stop() {
-        System.out.println("The door is stopped");
+        this.state = "The door is stopped";
     }
 
     public void lightOn() {
-        System.out.println("The light in garage is on");
+        this.state = "The light in garage is on";
     }
     
     public void lightOff() {
-        System.out.println("The light in garage is off");
+        this.state = "The light in garage is off";
+    }
+
+    public String toString() {
+        return this.state;
     }
 }

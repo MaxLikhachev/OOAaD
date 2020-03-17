@@ -5,18 +5,18 @@ public class Light {
 
     public Light(String location) {
         this.location = location;
-        this.state = "off";   
+        this.state = "Light is off";   
     }
     
     public void on() {
-        this.state = "on";      
+        this.state = "Light is on";      
     }   
     
     public void off() {
-        this.state = "off";  
+        this.state = "Light is off";  
     }
 
     public String toString() {
-        return this.location + " Light is " + this.state;
+        return this.location + " " + this.state;
     }
 }

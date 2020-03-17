@@ -8,32 +8,30 @@ public class Stereo {
     }
     
     public void on() {
-        this.state = "on";   
+        this.state = "Stereo is on";   
     }
     
     public void off() {
-        this.state = "off";   
+        this.state = "Stereo is off";   
     }
     
     public void setSD() {
-        this.state = "set for CD input";   
+        this.state = "Stereo is set for CD input";   
     }
 
     public void setDVD() {
-        this.state = "set for DVD input";   
+        this.state = "Stereo is set for DVD input";   
     }
     
     public void setRadio() {
-        this.state = "set";   
+        this.state = "Stereo is set";   
     }
     
     public void setVolume(int volume){
-        System.out.println(location + " stereo volume set to " + volume);
-
-        this.state = "set to " + volume;   
+        this.state = "Stereo volume set to " + volume;   
     }
 
     public String toString() {
-        return this.location + "Radio is " + this.state;
+        return this.location + " " + this.state;
     }
 }
