@@ -8,6 +8,9 @@ public class RemoteControlGUI extends JFrame {
 
 	private static final long serialVersionUID = -898242245822955215L;
 
+	private JMenuBar menuBar = new JMenuBar();
+	private RemoteControl remoteControl = new RemoteControl();
+
 	private Light light = new Light("");
 	private Stereo stereo = new Stereo("");
 	private GarageDoor garageDoor = new GarageDoor();
@@ -38,6 +41,9 @@ public class RemoteControlGUI extends JFrame {
 	    super("Remote control");
 	    this.setBounds(100,100,320,320);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		renderMenuBar();
+		setJMenuBar(menuBar);
 
 	   	Container container = this.getContentPane();
 		container.setLayout(new GridLayout(0, 2, 5, 5) );
@@ -47,14 +53,14 @@ public class RemoteControlGUI extends JFrame {
 
 		radioLightOn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new LightOnCommand(light).execute();
+				remoteControl.execute(new LightOnCommand(light));
 				statusBar.setText(light.toString());
 			}
 		});
 
 		radioLightOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new LightOffCommand(light).execute();
+				remoteControl.execute(new LightOffCommand(light));
 				statusBar.setText(light.toString());
 			}
 		});
@@ -76,13 +82,13 @@ public class RemoteControlGUI extends JFrame {
 
 		radioStereoOnWithCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new StereoOnWithCDCommand(stereo).execute();
+				remoteControl.execute(new StereoOnWithCDCommand(stereo));
 				statusBar.setText(stereo.toString());
 			}
 		});
 		radioStereoOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new StereoOffCommand(stereo).execute();
+				remoteControl.execute(new StereoOffCommand(stereo));
 				statusBar.setText(stereo.toString());
 			}
 		});
@@ -105,14 +111,14 @@ public class RemoteControlGUI extends JFrame {
 
 		radioGarageDoorOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GarageDoorOpenCommand(garageDoor).execute();
+				remoteControl.execute(new GarageDoorOpenCommand(garageDoor));
 				statusBar.setText(garageDoor.toString());
 			}
 		});
 
 		radioGarageDoorClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GarageDoorCloseCommand(garageDoor).execute();
+				remoteControl.execute(new GarageDoorCloseCommand(garageDoor));
 				statusBar.setText(garageDoor.toString());
 			}
 		});
@@ -135,28 +141,28 @@ public class RemoteControlGUI extends JFrame {
 
 		radioCeilingFanHigh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CeilingFanHighCommand(ceilingFan).execute();
+				remoteControl.execute(new CeilingFanHighCommand(ceilingFan));
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
 
 		radioCeilingFanMedium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CeilingFanMediumCommand(ceilingFan).execute();
+				remoteControl.execute(new CeilingFanMediumCommand(ceilingFan));
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
 
 		radioCeilingFanLow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CeilingFanLowCommand(ceilingFan).execute();
+				remoteControl.execute(new CeilingFanLowCommand(ceilingFan));
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
 
 		radioCeilingFanOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CeilingFanOffCommand(ceilingFan).execute();
+				remoteControl.execute(new CeilingFanOffCommand(ceilingFan));
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
@@ -181,5 +187,40 @@ public class RemoteControlGUI extends JFrame {
 		gridStatusBar.add(statusBar);
 
 		container.add(gridStatusBar);
+	}
+
+	private void renderMenuBar(){
+		menuBar.add(initFileMenu());
+		menuBar.add(initEditMenu());
+	}
+
+	private JMenu initFileMenu(){
+		JMenu menu = new JMenu("File");
+		JMenuItem menuItem = new JMenuItem("A text-only menu item");
+		menu.add(menuItem);
+		return menu;
+	}
+
+	private JMenu initEditMenu(){
+		JMenu menu = new JMenu("Edit");
+		JMenuItem undoMenuItem = new JMenuItem("Undo");
+		undoMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remoteControl.undo();
+				statusBar.setText("Undo");
+			}
+		});
+
+		JMenuItem redoMenuItem = new JMenuItem("Redo");
+		redoMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remoteControl.redo();
+				statusBar.setText("Redo");
+			}
+		});
+
+		menu.add(undoMenuItem);
+		menu.add(redoMenuItem);
+		return menu;
 	}
 }
