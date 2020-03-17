@@ -9,6 +9,10 @@ public class RemoteControlGUI extends JFrame {
 	private static final long serialVersionUID = -898242245822955215L;
 
 	private JMenuBar menuBar = new JMenuBar();
+	private JMenu menu = new JMenu("Edit");
+	private JMenuItem undoMenuItem = new JMenuItem("Undo");
+	private JMenuItem redoMenuItem = new JMenuItem("Redo");
+
 	private RemoteControl remoteControl = new RemoteControl();
 
 	private Light light = new Light("");
@@ -54,7 +58,7 @@ public class RemoteControlGUI extends JFrame {
 		radioLightOn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new LightOnCommand(light));
-				
+				updateState();
 				statusBar.setText(light.toString());
 			}
 		});
@@ -62,7 +66,7 @@ public class RemoteControlGUI extends JFrame {
 		radioLightOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new LightOffCommand(light));
-				
+				updateState();
 				statusBar.setText(light.toString());
 			}
 		});
@@ -72,7 +76,7 @@ public class RemoteControlGUI extends JFrame {
 		groupLight.add(radioLightOn);
 	    groupLight.add(radioLightOff);
 	    gridLight.add(radioLightOn);
-	    radioLightOff.setSelected(true);
+		radioLightOff.setSelected(true);
 		gridLight.add(radioLightOff);
 
 		container.add(gridLight);
@@ -85,14 +89,14 @@ public class RemoteControlGUI extends JFrame {
 		radioStereoOnWithCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new StereoOnWithCDCommand(stereo));
-				
+				updateState();
 				statusBar.setText(stereo.toString());
 			}
 		});
 		radioStereoOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new StereoOffCommand(stereo));
-				
+				updateState();
 				statusBar.setText(stereo.toString());
 			}
 		});
@@ -103,7 +107,7 @@ public class RemoteControlGUI extends JFrame {
 	
 	    groupStereo.add(radioStereoOff);
 	    gridStereo.add(radioStereoOnWithCD);
-	    radioStereoOff.setSelected(true);
+		radioStereoOff.setSelected(true);
 		gridStereo.add(radioStereoOff);
 
 		container.add(gridStereo);
@@ -116,6 +120,7 @@ public class RemoteControlGUI extends JFrame {
 		radioGarageDoorOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new GarageDoorOpenCommand(garageDoor));
+				updateState();
 				statusBar.setText(garageDoor.toString());
 			}
 		});
@@ -123,6 +128,7 @@ public class RemoteControlGUI extends JFrame {
 		radioGarageDoorClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new GarageDoorCloseCommand(garageDoor));
+				updateState();
 				statusBar.setText(garageDoor.toString());
 			}
 		});
@@ -132,7 +138,8 @@ public class RemoteControlGUI extends JFrame {
 	    groupGarageDoor.add(radioGarageDoorOpen);
 	    groupGarageDoor.add(radioGarageDoorClose);
 	    gridGarageDoor.add(radioGarageDoorOpen);
-	    radioGarageDoorClose.setSelected(true);
+		radioGarageDoorClose.setSelected(true);
+		radioGarageDoorClose.setEnabled(false);
 		gridGarageDoor.add(radioGarageDoorClose);
 		
 		container.add(gridGarageDoor);
@@ -146,7 +153,7 @@ public class RemoteControlGUI extends JFrame {
 		radioCeilingFanHigh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new CeilingFanHighCommand(ceilingFan));
-				
+				updateState();
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
@@ -154,7 +161,7 @@ public class RemoteControlGUI extends JFrame {
 		radioCeilingFanMedium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new CeilingFanMediumCommand(ceilingFan));
-				
+				updateState();
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
@@ -162,7 +169,7 @@ public class RemoteControlGUI extends JFrame {
 		radioCeilingFanLow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new CeilingFanLowCommand(ceilingFan));
-				
+				updateState();
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
@@ -170,7 +177,7 @@ public class RemoteControlGUI extends JFrame {
 		radioCeilingFanOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remoteControl.execute(new CeilingFanOffCommand(ceilingFan));
-				
+				updateState();
 				statusBar.setText(ceilingFan.toString());
 			}
 		});
@@ -182,7 +189,8 @@ public class RemoteControlGUI extends JFrame {
 		groupCeilingFan.add(radioCeilingFanLow);
 		groupCeilingFan.add(radioCeilingFanOff);
 	    gridCeilingFan.add(radioCeilingFanHigh);
-	    radioCeilingFanOff.setSelected(true);
+		radioCeilingFanOff.setSelected(true);
+		radioCeilingFanOff.setSelected(false);
 		gridCeilingFan.add(radioCeilingFanMedium);
 		gridCeilingFan.add(radioCeilingFanLow);
 		gridCeilingFan.add(radioCeilingFanOff);
@@ -195,6 +203,7 @@ public class RemoteControlGUI extends JFrame {
 		gridStatusBar.add(statusBar);
 
 		container.add(gridStatusBar);
+		updateState();
 	}
 
 	private void renderMenuBar(){
@@ -210,8 +219,7 @@ public class RemoteControlGUI extends JFrame {
 	}
 
 	private JMenu initEditMenu(){
-		JMenu menu = new JMenu("Edit");
-		JMenuItem undoMenuItem = new JMenuItem("Undo");
+		//undoMenuItem.setEnabled(remoteControl.isPossibleUndo());
 		undoMenuItem.setAccelerator(KeyStroke.getKeyStroke("meta Z"));
 		undoMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -220,11 +228,11 @@ public class RemoteControlGUI extends JFrame {
 				statusBar.setText("Undo");
 			}
 		});
-
-		JMenuItem redoMenuItem = new JMenuItem("Redo");
+		//redoMenuItem.setEnabled(false);
 		redoMenuItem.setAccelerator(KeyStroke.getKeyStroke("meta shift Z"));
 		redoMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				redoMenuItem.setEnabled(remoteControl.isPossibleRedo());
 				remoteControl.redo();
 				updateState();
 				statusBar.setText("Redo");
@@ -237,23 +245,79 @@ public class RemoteControlGUI extends JFrame {
 	}
 
 	private void updateState() {
+
+		undoMenuItem.setEnabled(remoteControl.isPossibleUndo());
+		redoMenuItem.setEnabled(remoteControl.isPossibleRedo());
 		switch(light.state) {
-			case Light.ON: radioLightOn.setSelected(true); break;
-            case Light.OFF: radioLightOff.setSelected(true); break;
+			case Light.ON: {
+				radioLightOn.setSelected(true);
+				radioLightOn.setEnabled(false);
+				radioLightOff.setEnabled(true);
+			} break;
+            case Light.OFF: {
+				radioLightOff.setSelected(true);
+				radioLightOff.setEnabled(false);
+				radioLightOn.setEnabled(true);
+			} break;
 		}
 		switch(stereo.state) {
-			case Stereo.ON: radioStereoOnWithCD.setSelected(true); break;
-            case Stereo.OFF: radioStereoOff.setSelected(true); break;
+			case Stereo.ON: {
+				radioStereoOnWithCD.setSelected(true);
+				radioStereoOnWithCD.setEnabled(false);
+				radioStereoOff.setEnabled(true);
+			} break;
+            case Stereo.OFF: {
+				radioStereoOff.setSelected(true);
+				radioStereoOff.setEnabled(false);
+				radioStereoOnWithCD.setEnabled(true);
+			} break;
 		}
 		switch(garageDoor.state) {
-			case GarageDoor.UP: radioGarageDoorOpen.setSelected(true); break;
-            case GarageDoor.DOWN: radioGarageDoorClose.setSelected(true); break;
+			case GarageDoor.UP: {
+				radioGarageDoorOpen.setSelected(true);
+				radioGarageDoorOpen.setEnabled(false);
+				radioGarageDoorClose.setEnabled(true);
+			} break;
+            case GarageDoor.DOWN: {
+				radioGarageDoorClose.setSelected(true);
+				radioGarageDoorClose.setEnabled(false);
+				radioGarageDoorOpen.setEnabled(true);
+			} break;
 		}
 		switch(ceilingFan.getSpeed()) {
-			case CeilingFan.HIGH: radioCeilingFanHigh.setSelected(true); break;
-			case CeilingFan.MEDIUM: radioCeilingFanMedium.setSelected(true); break;
-			case CeilingFan.LOW: radioCeilingFanLow.setSelected(true); break;
-			case CeilingFan.OFF: radioCeilingFanOff.setSelected(true); break;
+			case CeilingFan.HIGH: {
+				radioCeilingFanHigh.setSelected(true); 
+				radioCeilingFanHigh.setEnabled(false);
+				
+				radioCeilingFanMedium.setEnabled(true);
+				radioCeilingFanLow.setEnabled(true);
+				radioCeilingFanOff.setEnabled(true);
+			}break;
+			case CeilingFan.MEDIUM: {
+				radioCeilingFanMedium.setSelected(true); 
+				radioCeilingFanMedium.setEnabled(false);
+
+				radioCeilingFanHigh.setEnabled(true);
+				radioCeilingFanLow.setEnabled(true);
+				radioCeilingFanOff.setEnabled(true);
+			}break;
+			case CeilingFan.LOW: {
+				radioCeilingFanLow.setSelected(true);
+				radioCeilingFanLow.setEnabled(false);
+				
+				radioCeilingFanHigh.setEnabled(true);
+				radioCeilingFanMedium.setEnabled(true);
+				radioCeilingFanOff.setEnabled(true);
+			}break;
+			case CeilingFan.OFF: {
+				radioCeilingFanOff.setSelected(true);
+				radioCeilingFanOff.setEnabled(false);
+				
+				radioCeilingFanHigh.setEnabled(true);
+				radioCeilingFanMedium.setEnabled(true);
+				radioCeilingFanLow.setEnabled(true);
+			}break;
 		}
 	}
+	
 }

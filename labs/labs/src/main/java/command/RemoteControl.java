@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class RemoteControl {
     ArrayList<Command> commands = new ArrayList<>();
-    ArrayList<Integer> prevIndexes = new ArrayList<>();
+    ArrayList<Integer> buffer = new ArrayList<>();
 
     int index = 0, prevIndex = 0;
     
@@ -18,21 +18,29 @@ public class RemoteControl {
     }
 
     public void undo() {
-        System.out.println("\nUNDO");
+        if (isPossibleUndo()) {
+            System.out.println("\nUNDO");
 
-        this.getCurrentCommand().undo();
-        this.goToPrevState();
+            this.getCurrentCommand().undo();
+            this.goToPrevState();
 
-        this.showCurrentState();
+            this.showCurrentState();
+        } else {
+            System.out.println("\nTRYING UNDO");
+        }
     }
 
     public void redo() {
-        System.out.println("\nREDO");
+        if (isPossibleRedo()) {
+            System.out.println("\nREDO");
 
-        this.goToNextState();
-        this.getCurrentCommand().execute();
+            this.goToNextState();
+            this.getCurrentCommand().execute();
 
-        this.showCurrentState();
+            this.showCurrentState();
+        } else {
+            System.out.println("\nTRYING REDO");
+        }
     }
 
     private void addCommand(Command command) {
@@ -40,7 +48,7 @@ public class RemoteControl {
         this.index = this.commands.size();
 
         this.commands.add(command);
-        this.prevIndexes.add(this.prevIndex);
+        this.buffer.add(this.prevIndex);
     }
 
     private Command getCurrentCommand() {
@@ -49,14 +57,23 @@ public class RemoteControl {
 
     private void goToPrevState() {
         this.prevIndex = this.index;
-        this.index = this.prevIndexes.get(this.index);
+        this.index = this.buffer.get(this.index);
     }
 
     private void goToNextState() {
-        this.prevIndex = this.prevIndex ^ this.index ^ ( this.index = this.prevIndex );
+        this.prevIndex = this.index;
+        this.index = this.buffer.lastIndexOf(this.index) == -1 ? this.index : this.buffer.lastIndexOf(this.index);
     }
 
     private void showCurrentState() {
-        System.out.println(this.index + " <- " + this.prevIndex + " : " + this.commands.get(this.prevIndexes.get(this.index)));
+        System.out.println(this.index + " <- " + this.prevIndex + " : " + this.commands.get(this.buffer.get(this.index)));
+    }
+
+    public boolean isPossibleUndo() {
+        return this.index == 0 && this.prevIndex == 0 ? false : true;
+    }
+
+    public boolean isPossibleRedo() {
+        return this.index == this.buffer.size() - 1 ? false : true;
     }
 }
