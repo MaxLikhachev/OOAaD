@@ -6,32 +6,37 @@ public class CeilingFan {
     public static final int MEDIUM = 2;
     public static final int LOW = 1;
     public static final int OFF = 0;
-    private String location, state = "";
+    
+    private String location, status = "";
     int speed;
 
     public CeilingFan(String location){        
         this.location = location;    
-        speed = OFF;    
+        this.off();    
     }
 
     public void high(){        
         speed = HIGH;        
-        this.state = location + " Ceiling fan is on high";    
+        this.status = location + " Ceiling fan is on high"; 
+        System.out.println(this.toString());     
     }
 
     public void medium(){        
         speed = MEDIUM;        
-        this.state = location + " Ceiling fan is on medium";    
+        this.status = location + " Ceiling fan is on medium"; 
+        System.out.println(this.toString());     
     }
 
     public void low(){        
         speed = LOW;        
-        this.state = location + " Ceiling fan is on low";    
+        this.status = location + " Ceiling fan is on low"; 
+        System.out.println(this.toString());     
     }
 
     public void off(){        
         speed = OFF;        
-        this.state = location + " Ceiling fan is off";    
+        this.status = location + " Ceiling fan is off";   
+        System.out.println(this.toString());   
     }
 
     public int getSpeed(){        
@@ -39,6 +44,6 @@ public class CeilingFan {
     }
 
     public String toString() {
-        return this.location + " " + this.state;
+        return this.location + " " + this.status;
     }
 }

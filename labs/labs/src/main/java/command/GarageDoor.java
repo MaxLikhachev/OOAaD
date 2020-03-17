@@ -1,29 +1,45 @@
 package command;
 
 public class GarageDoor {
-    private String state;
+
+    public static final int UP = 1;
+    public static final int DOWN = 0;
+
+    private String status;
+    int state;
+
+    public GarageDoor() {
+        this.down();
+    }
 
     public void up() {
-        this.state = "The door is up";
+        this.status = "The door is up";
+        this.state = UP;
+        System.out.println(this.toString());  
     }
 
     public void down() {
-        this.state = "The door is down";
+        this.status = "The door is down";
+        this.state = DOWN;
+        System.out.println(this.toString());  
     }
 
     public void stop() {
-        this.state = "The door is stopped";
+        this.status = "The door is stopped";
+        System.out.println(this.toString());  
     }
 
     public void lightOn() {
-        this.state = "The light in garage is on";
+        this.status = "The light in garage is on";
+        System.out.println(this.toString());  
     }
     
     public void lightOff() {
-        this.state = "The light in garage is off";
+        this.status = "The light in garage is off";
+        System.out.println(this.toString());  
     }
 
     public String toString() {
-        return this.state;
+        return this.status;
     }
 }

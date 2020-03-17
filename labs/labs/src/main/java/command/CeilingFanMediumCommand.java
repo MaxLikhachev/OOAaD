@@ -16,10 +16,10 @@ public class CeilingFanMediumCommand implements Command {
 
     public void undo(){        
         switch(prevSpeed) {
-            case CeilingFan.HIGH: ceilingFan.high();
-            case CeilingFan.MEDIUM: ceilingFan.medium();
-            case CeilingFan.LOW: ceilingFan.low();
-            case CeilingFan.OFF: ceilingFan.off();
+            case CeilingFan.HIGH: ceilingFan.high(); break;
+            case CeilingFan.MEDIUM: ceilingFan.medium(); break;
+            case CeilingFan.LOW: ceilingFan.low(); break;
+            case CeilingFan.OFF: ceilingFan.off(); break;
         }  
     }
 }

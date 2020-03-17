@@ -55,15 +55,7 @@ public class RemoteControl {
     private void goToNextState() {
         this.prevIndex = this.prevIndex ^ this.index ^ ( this.index = this.prevIndex );
     }
-/*
-    private Command getPrevCommand() {
-        return this.commands.get(this.commands.get(this.index).prevIndex);
-    }
 
-    private Command getNextCommand() {
-        return this.commands.get(this.commands.get(this.index).prevIndex);
-    }
-*/
     private void showCurrentState() {
         System.out.println(this.index + " <- " + this.prevIndex + " : " + this.commands.get(this.prevIndexes.get(this.index)));
     }

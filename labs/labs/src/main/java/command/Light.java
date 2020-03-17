@@ -1,22 +1,34 @@
 package command;
 
 public class Light {
-    private String location, state;
+
+    
+    public static final int ON = 1;
+    public static final int OFF = 0;
+
+    private String location, status;
+    int state;
 
     public Light(String location) {
         this.location = location;
-        this.state = "Light is off";   
+        this.off();   
     }
     
     public void on() {
-        this.state = "Light is on";      
+        this.state = ON;
+        this.status = "Light is on";
+
+        System.out.println(this.toString());        
     }   
     
     public void off() {
-        this.state = "Light is off";  
+        this.state = OFF;
+        this.status = "Light is off";
+
+        System.out.println(this.toString());  
     }
 
     public String toString() {
-        return this.location + " " + this.state;
+        return this.location + " " + this.status;
     }
 }
