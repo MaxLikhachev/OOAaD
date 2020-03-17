@@ -1,6 +1,6 @@
 package command;
 
-public class CeilingFan {
+public class CeilingFan implements Device {
    
     public static final int HIGH = 3;
     public static final int MEDIUM = 2;
@@ -45,5 +45,9 @@ public class CeilingFan {
 
     public String toString() {
         return this.location + " " + this.status;
+    }
+
+    public int getState() {
+        return this.speed;
     }
 }

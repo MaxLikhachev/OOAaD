@@ -1,6 +1,6 @@
 package command;
 
-public class Stereo {
+public class Stereo implements Device {
 
     public static final int ON = 1;
     public static final int OFF = 0;
@@ -47,5 +47,9 @@ public class Stereo {
 
     public String toString() {
         return this.location + " " + this.status;
+    }
+
+    public int getState() {
+        return this.state;
     }
 }

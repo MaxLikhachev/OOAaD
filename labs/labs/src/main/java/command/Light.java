@@ -1,6 +1,6 @@
 package command;
 
-public class Light {
+public class Light implements Device {
 
     
     public static final int ON = 1;
@@ -30,5 +30,9 @@ public class Light {
 
     public String toString() {
         return this.location + " " + this.status;
+    }
+
+    public int getState() {
+        return this.state;
     }
 }
