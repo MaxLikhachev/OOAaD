@@ -43,7 +43,7 @@ public class ExperimentRemoteControlGUI extends JFrame {
 	private JLabel statusTitle = new JLabel("Status: ");
 	private JLabel statusBar = new JLabel("");
 	
-	public RemoteControlGUI() {
+	public ExperimentRemoteControlGUI() {
 	    super("Remote control");
 	    this.setBounds(100,100,320,320);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
