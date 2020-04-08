@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class RouteConcreteIterator implements RouteIterator{
     RouteConcreteCollection routeConcreteCollection;
-    ArrayList<BusStop> busStops = new ArrayList<>();
     int iterationState = 0;
     int distance = 1;
 
@@ -16,11 +15,11 @@ public class RouteConcreteIterator implements RouteIterator{
     public BusStop getNext() {
         
         this.distance = this.iterationState == 0 ? 1 : this.distance;
-        this.distance = this.iterationState == this.busStops.size() - 1 ? -1 : this.distance;
+        this.distance = this.iterationState == this.routeConcreteCollection.getBusStops().size() - 1 ? -1 : this.distance;
 
         this.iterationState += this.distance;
 
-        return this.busStops.get(this.iterationState);
+        return this.routeConcreteCollection.getBusStops().get(this.iterationState);
     }
     
 }

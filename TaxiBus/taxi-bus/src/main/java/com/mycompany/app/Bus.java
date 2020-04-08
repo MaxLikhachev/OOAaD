@@ -12,7 +12,7 @@ public class Bus implements Component, PassengerController {
         this.name = name;
         this.size = size;
 
-        this.render();
+        //this.render();
     }
 
     @Override

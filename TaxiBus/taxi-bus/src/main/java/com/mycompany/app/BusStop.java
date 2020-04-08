@@ -11,19 +11,19 @@ public class BusStop implements Component, PassengerController, BusController {
     public BusStop(String name) {
         this.name = name;
 
-        this.render();
+        //this.render();
     }
 
     @Override
     public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
-
+        this.renderMessage("appeared new passenger: " + passenger );
     }
 
     @Override
     public void removePassenger(Passenger passenger) {
         this.passengers.remove(passenger);
-
+        this.renderMessage("leaved passenger: " + passenger );
     }
 
     @Override
@@ -67,4 +67,7 @@ public class BusStop implements Component, PassengerController, BusController {
         return "Bus stop \"" + this.name + "\" [" + this.passengers.size() + "]: ";
     }
 
+    public int getSizeOfPassengers() {
+        return this.passengers.size();
+    }
 }

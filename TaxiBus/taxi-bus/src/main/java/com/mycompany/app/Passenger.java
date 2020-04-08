@@ -5,12 +5,11 @@ public class Passenger implements Component{
     String name;
     BusStop busStop;
 
-    public Passenger(BusStop busStop) {
+    public Passenger(String name, BusStop busStop) {
         this.busStop = busStop;
-        //TODO Passenger name generator
-        this.name = "";
+        this.name = name;
 
-        this.render();
+        //this.render();
     }
  
     public BusStop getBusStop() {
@@ -32,7 +31,7 @@ public class Passenger implements Component{
     public void renderMessage(String message) {
         System.out.println(this.toString() + message);
     }
-    
+
     public String toString() {
         return "Passenger \"" + this.name + "\" -> " + this.busStop + ": ";
     }
