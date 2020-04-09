@@ -22,9 +22,13 @@ public class Passenger implements Component{
     }
 
 	public void leaveBus(Bus bus) {
+        this.renderMessage("leaved bus " + bus);
+        bus.removePassenger(this);
 	}
 
-	public void goToBus(Bus bus) {
+	public boolean goToBus(Bus bus) {
+        this.renderMessage("went to bus " + bus);
+        return bus.addPassenger(this);
 	}
 
     @Override

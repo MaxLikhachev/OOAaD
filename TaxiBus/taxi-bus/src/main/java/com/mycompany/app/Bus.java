@@ -16,8 +16,11 @@ public class Bus implements Component, PassengerController {
     }
 
     @Override
-    public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
+    public boolean addPassenger(Passenger passenger) {
+        if (this.passengers.size() < this.size) {
+            this.passengers.add(passenger);
+            return true;
+        } else return false;
     }
 
     @Override
@@ -40,7 +43,6 @@ public class Bus implements Component, PassengerController {
         boolean isReached = false;
         for (Passenger passenger : this.passengers) {
             if (passenger.getBusStop() == busStop) {
-                this.dropOffPassenger(passenger);
                 isReached = !isReached;
             }
         }
@@ -52,9 +54,25 @@ public class Bus implements Component, PassengerController {
         this.addPassenger(passenger);
     }
 
-    private void dropOffPassenger(Passenger passenger) { 
+    public void dropOffPassenger(Passenger passenger) { 
         passenger.leaveBus(this);
         passengers.remove(passenger);
+    }
+
+    public ArrayList<Passenger> dropOffPassengers(BusStop busStop) {
+        ArrayList<Passenger> passengers = new ArrayList<>();
+ 
+        for (Passenger passenger : this.passengers) {
+            if (passenger.getBusStop() == busStop) {
+                passengers.add(passenger);
+            }
+        }
+
+        for (Passenger passenger : passengers) {
+            this.dropOffPassenger(passenger);
+        }
+
+        return passengers;
     }
 
     public String toString() {

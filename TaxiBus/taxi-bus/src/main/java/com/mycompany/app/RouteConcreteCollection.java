@@ -19,4 +19,20 @@ public class RouteConcreteCollection implements RouteIterableCollection {
         return new RouteConcreteIterator(this);
     }
 
+	public Bus getBus(int iterationState) {
+		return this.busStops.get(iterationState).getBus();
+    }
+    
+    public void removeBus(int iterationState) {
+		this.busStops.get(iterationState).removeBus();
+	}
+
+	public int getSize() {
+		return this.busStops.size();
+	}
+
+	public BusStop getBusStop(int iterationState) {
+		return this.busStops.get(iterationState);
+	}
+
 }

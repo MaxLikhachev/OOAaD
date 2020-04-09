@@ -15,9 +15,10 @@ public class BusStop implements Component, PassengerController, BusController {
     }
 
     @Override
-    public void addPassenger(Passenger passenger) {
+    public boolean addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
         this.renderMessage("appeared new passenger: " + passenger );
+        return true;
     }
 
     @Override
@@ -44,8 +45,8 @@ public class BusStop implements Component, PassengerController, BusController {
 
     @Override
     public void removeBus() {
+        this.renderMessage("leaved on bus: " + this.bus);
         this.bus = null;
-        this.renderMessage("leaved on bus: " + bus);
     }
 
     @Override
@@ -70,4 +71,18 @@ public class BusStop implements Component, PassengerController, BusController {
     public int getSizeOfPassengers() {
         return this.passengers.size();
     }
+
+	public Bus getBus() {
+		return this.bus;
+	}
+
+	public ArrayList<Passenger> getPassengers() {
+		return this.passengers;
+	}
+
+	public void addPassengers(ArrayList<Passenger> passengers) {
+        for (Passenger passenger : passengers) {
+            this.passengers.add(passenger);
+        }
+	}
 }

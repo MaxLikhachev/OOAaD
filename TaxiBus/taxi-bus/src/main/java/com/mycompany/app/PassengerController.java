@@ -1,7 +1,7 @@
 package com.mycompany.app;
 
 public interface PassengerController {
-    void addPassenger(Passenger passenger);
+    boolean addPassenger(Passenger passenger);
     void removePassenger(Passenger passenger);
     int getIndex(Passenger passenger);
     boolean hasPassengers();

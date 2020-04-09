@@ -24,7 +24,7 @@ public class App {
 
     private static void initBuses(ArrayList<Bus> buses) {
         buses.add(new Bus("1", 50));
-        buses.add(new Bus("2", 30));
+        //buses.add(new Bus("2", 30));
     }
 
     private static void initBusStops(ArrayList<BusStop> busStops) {
@@ -36,12 +36,34 @@ public class App {
         return busStops.get(new Random().nextInt(busStops.size()));
     }
 
-    private static void step(BusStop busStop, ArrayList<BusStop> busStops) {
+    private static void step(BusStop busStop, ArrayList<BusStop> busStops, RouteIterator routeIterator) {
+        System.out.println("\n\n\n---------------------------------------------------NEW STEP---------------------------------------------------");
+        System.out.println("\n---------------------------------------------------GENERATION NEW PASSENGERS---------------------------------------------------");
         generateRandomPassengers(busStop, busStops);
+        System.out.println("\n---------------------------------------------------DROPPING OFF PASSENGERS---------------------------------------------------");
+        dropOffPassengers(busStop);
+        System.out.println("\n---------------------------------------------------PICKING UP PASSENGERS---------------------------------------------------");
+        pickUpPassengers(busStop, busStops, routeIterator);
+    }
 
-        // TODO:
-        //1. Moving bus on next bus stop
-        //2. Search bus stop (in concrete iterator)
+    private static void dropOffPassengers(BusStop busStop) {
+        if (busStop.getBus().isAnyPassengerReached(busStop)) {
+            busStop.addPassengers(busStop.getBus().dropOffPassengers(busStop));
+        }
+    }
+
+    private static void pickUpPassengers(BusStop busStop, ArrayList<BusStop> busStops, RouteIterator routeIterator) {
+        ArrayList<Passenger> passengers = new ArrayList<>();
+
+        for (Passenger passenger : busStop.getPassengers()) {
+            if (routeIterator.searchElement(passenger.getBusStop()) && passenger.goToBus(busStop.getBus())) {
+                passengers.add(passenger);
+            }
+        }
+
+        for (Passenger passenger : passengers) {
+            busStop.removePassenger(passenger);
+        }
     }
 
     private static void generateRandomPassengers(BusStop busStop, ArrayList<BusStop> busStops) {
@@ -62,12 +84,12 @@ public class App {
         RouteConcreteCollection routeConcreteCollection = new RouteConcreteCollection(busStops);
         RouteIterator routeIterator = routeConcreteCollection.createIterator();
 
-        step(busStops.get(0), busStops);
+        step(busStops.get(0), busStops, routeIterator);
 
-        while (0 == 0) {
-            step(routeIterator.getNext(), busStops);
+        while (true) {
+            step(routeIterator.getNext(), busStops, routeIterator);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
