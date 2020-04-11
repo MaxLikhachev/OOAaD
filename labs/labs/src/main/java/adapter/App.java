@@ -3,7 +3,7 @@ package adapter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Solution {
+public class App {
     public static Map<String, String> countries = new HashMap<String, String>();
 
     public static void main(String[] args) {
