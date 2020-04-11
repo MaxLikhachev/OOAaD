@@ -1,6 +1,6 @@
 package adapter;
 
-import adapter.Solution.IIncomeData;
+import adapter.App.IIncomeData;
 
 public class IncomeData implements IIncomeData {
 

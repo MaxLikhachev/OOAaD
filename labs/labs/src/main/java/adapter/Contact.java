@@ -1,6 +1,6 @@
 package adapter;
 
-import adapter.Solution.IContact;
+import adapter.App.IContact;
 
 public class Contact implements IContact {
 
