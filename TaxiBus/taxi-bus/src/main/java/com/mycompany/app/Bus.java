@@ -15,7 +15,10 @@ public class Bus implements Component, PassengerController {
         //this.render();
     }
 
-    @Override
+    public Bus() {
+	}
+
+	@Override
     public boolean addPassenger(Passenger passenger) {
         if (this.passengers.size() < this.size) {
             this.passengers.add(passenger);

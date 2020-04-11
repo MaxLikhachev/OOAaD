@@ -8,23 +8,19 @@ public class App {
 
     static int maxPassengersonBusStop = 5;
 
-    private static void init(ArrayList<BusStop> busStops, ArrayList<Bus> buses) {
+    private static void init(ArrayList<BusStop> busStops, Bus bus) {
         initBusStops(busStops);
-        initBuses(buses);
+        initBus(bus);
 
-        setBuses(busStops, buses);
+        setBuses(busStops, bus);
     }
 
-    private static void setBuses(ArrayList<BusStop> busStops, ArrayList<Bus> buses) {
-        if (buses.size() > 0)
-            busStops.get(0).setBus(buses.get(0));
-        if (buses.size() > 1)
-            busStops.get(busStops.size() - 1).setBus(buses.get(1));
-    }
+    private static void setBuses(ArrayList<BusStop> busStops, Bus bus) {
+        busStops.get(0).setBus(bus);
+    }   
 
-    private static void initBuses(ArrayList<Bus> buses) {
-        buses.add(new Bus("1", 50));
-        //buses.add(new Bus("2", 30));
+    private static void initBus(Bus bus) {
+        bus = new Bus("1", 50);
     }
 
     private static void initBusStops(ArrayList<BusStop> busStops) {
@@ -78,9 +74,9 @@ public class App {
 
         ArrayList<BusStop> busStops = new ArrayList<>();
 
-        ArrayList<Bus> buses = new ArrayList<>();
+        Bus bus = new Bus();
 
-        init(busStops, buses);
+        init(busStops, bus);
         RouteConcreteCollection routeConcreteCollection = new RouteConcreteCollection(busStops);
         RouteIterator routeIterator = routeConcreteCollection.createIterator();
 
