@@ -23,5 +23,13 @@ public abstract class Cannibal {
         System.out.println("Cannibal " + this.name + " go to sleep");
     }
 
-    abstract public void act(Human human);
+    public void act(Human human) {
+        this.hunt(human);
+        this.cook(human);
+        this.talk(human);
+        this.eat(human);
+        this.sleep();
+    }
+
+    abstract public void talk(Human human);
 }
