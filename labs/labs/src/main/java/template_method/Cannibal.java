@@ -31,5 +31,5 @@ public abstract class Cannibal {
         this.sleep();
     }
 
-    abstract public void talk(Human human);
+    public void talk(Human human) {};
 }

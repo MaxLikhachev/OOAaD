@@ -16,9 +16,4 @@ public class AggressiveCannibal extends Cannibal {
     public void cook(Human human) {
         System.out.println("Boiled human: " + human.toString());
     }
-
-    @Override
-    public void talk(Human human) {
-        System.out.println("Not talking with human: " + human.toString());
-    }
 }
